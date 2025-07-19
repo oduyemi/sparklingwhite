@@ -1,0 +1,38 @@
+{
+  "name": "sparklingwhite",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/next-js": "^2.4.2",
+    "@chakra-ui/react": "^2.10.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@types/bootstrap": "^5.2.10",
+    "@types/react-bootstrap": "^1.0.1",
+    "animate.css": "^4.1.1",
+    "bootstrap": "^5.3.7",
+    "bootstrap-icons": "^1.13.1",
+    "framer-motion": "^12.23.6",
+    "next": "15.4.1",
+    "react": "19.1.0",
+    "react-bootstrap": "^2.10.10",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.5.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.1",
+    "typescript": "^5"
+  }
+}
