@@ -1,19 +1,19 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import "./About.css"; 
 
 export const AboutHome: React.FC = () => {
   return (
     <section className="about-section">
       <div className="about-container">
-        <div className="about-row">
+        {/* Grid Layout */}
+        <div className="about-grid">
           {/* Image */}
-          <div className="about-image-wrapper">
-            <div className="image-inner">
+          <div className="about-image-block">
+            <div className="image-wrapper">
               <Image
                 src="/images/abthome.jpg"
-                alt="Experience Image"
+                alt="Professional Cleaning Service"
                 width={600}
                 height={600}
                 className="about-image"
@@ -22,124 +22,127 @@ export const AboutHome: React.FC = () => {
             </div>
           </div>
 
-          {/* Content */}
-          <div className="about-content">
-            <h2 className="about-heading">
-              <span className="about-years">10</span> Years Experience
+          {/* Text */}
+          <div className="about-text-block">
+            <h2 className="about-title">
+              We Deliver <span className="accent">Immaculate Results</span>
             </h2>
-            <p className="about-paragraph">
-              We specialize in delivering reliable and cutting-edge solutions for modern businesses.
-              Our decade of experience ensures your goals are met with expertise and precision.
+            <p className="about-subtext">
+              We may be new on the scene, but our approach is backed by years of experience across
+              residential, commercial, and industrial cleaning. Based in the UK, our promise is simple:
+              precision, reliability, and care.
             </p>
-            <p className="about-paragraph">
-              Whether you&apos;re a startup or an enterprise, our team brings strategic insight and
-              technical mastery to your project—maximizing results with minimum friction.
+            <p className="about-subtext">
+              Every space we clean is treated with meticulous attention to detail—because we believe
+              cleanliness isn&apos;t just a service, it&apos;s a standard.
             </p>
-            <a href="/about" className="about-btn">Learn More</a>
+            <a href="/about" className="about-button">
+              Learn More
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Embedded Styling */}
       <style jsx>{`
         .about-section {
-          background-color: #f8f9fc;
-          padding: 4rem 1rem;
+          background-color: #f9fafa;
+          padding: 6rem 1rem;
         }
 
         .about-container {
-          max-width: 1200px;
+          max-width: 1280px;
           margin: 0 auto;
+          padding: 0 2rem;
         }
 
-        .about-row {
-          display: flex;
-          flex-wrap: wrap;
+        .about-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 4rem;
           align-items: center;
-          gap: 2rem;
         }
 
-        .about-image-wrapper {
-          flex: 1 1 50%;
+        .about-image-block {
+          display: flex;
+          justify-content: center;
         }
 
-        .image-inner {
-          position: relative;
-          overflow: hidden;
+        .image-wrapper {
+          width: 100%;
+          max-width: 600px;
           border-radius: 20px;
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
           transition: transform 0.4s ease;
         }
 
-        .image-inner:hover {
+        .image-wrapper:hover {
           transform: scale(1.03);
         }
 
         .about-image {
+          width: 100%;
+          height: auto;
           object-fit: cover;
-          border-radius: 20px;
+          display: block;
         }
 
-        .about-content {
-          flex: 1 1 50%;
-          padding: 1rem;
+        .about-text-block {
+          max-width: 600px;
         }
 
-        .about-heading {
-          font-size: 2.5rem;
-          font-weight: 700;
+        .about-title {
+          font-size: 2.3rem;
+          font-weight: 800;
+          color: #1a1a1a;
           margin-bottom: 1.5rem;
-          color: #1a202c;
+          line-height: 1.2;
         }
 
-        .about-years {
-          font-size: 3.5rem;
+        .accent {
           color: #00b4f2;
           font-weight: 900;
         }
 
-        .about-paragraph {
-          font-size: 1.1rem;
-          color: #4a5568;
-          margin-bottom: 1rem;
-          line-height: 1.7;
+        .about-subtext {
+          font-size: 1.15rem;
+          color: #4a4a4a;
+          line-height: 1.8;
+          margin-bottom: 1.2rem;
         }
 
-        .about-btn {
+        .about-button {
           display: inline-block;
-          margin-top: 1rem;
+          margin-top: 1.5rem;
           background-color: #00b4f2;
           color: #fff;
-          padding: 0.75rem 2rem;
-          border-radius: 50px;
-          text-decoration: none;
+          padding: 0.85rem 2.25rem;
+          border-radius: 999px;
           font-weight: 600;
-          box-shadow: 0 6px 20px rgba(0, 180, 242, 0.3);
-          transition: all 0.3s ease-in-out;
+          text-decoration: none;
+          font-size: 1rem;
+          box-shadow: 0 8px 20px rgba(0, 180, 242, 0.3);
+          transition: all 0.3s ease;
         }
 
-        .about-btn:hover {
+        .about-button:hover {
           background-color: #009ed3;
           transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
-          .about-row {
-            flex-direction: column;
-          }
-
-          .about-content,
-          .about-image-wrapper {
-            flex: 1 1 100%;
+          .about-title {
+            font-size: 2.25rem;
             text-align: center;
           }
 
-          .about-heading {
-            font-size: 2rem;
+          .about-text-block {
+            text-align: center;
           }
 
-          .about-years {
-            font-size: 3rem;
+          .about-button {
+            margin-left: auto;
+            margin-right: auto;
           }
         }
       `}</style>
