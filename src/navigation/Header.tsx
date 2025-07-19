@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Transition, motion } from "framer-motion";
+import { Transition } from "framer-motion";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 

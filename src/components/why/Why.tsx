@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Box, Grid, Heading, Text, VStack, Button, useColorModeValue } from "@chakra-ui/react";
+import { Box, Grid, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { FaRegClock, FaShieldAlt, FaPeopleCarry, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { QuoteDialog } from "@/dialog/QuoteDialog";

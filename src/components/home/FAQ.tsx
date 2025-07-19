@@ -9,7 +9,6 @@ import {
   AccordionPanel,
   Heading,
   Text,
-  Button,
   Icon,
   useColorModeValue,
 } from "@chakra-ui/react";

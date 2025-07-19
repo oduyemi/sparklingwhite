@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import { Box, Heading, Text, Button, VStack, HStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 import "animate.css";
 import Link from "next/link";
