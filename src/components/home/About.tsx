@@ -27,7 +27,7 @@ export const About: React.FC = () => {
               We specialize in delivering reliable and cutting-edge solutions for modern businesses. Our decade of experience ensures your goals are met with expertise and precision.
             </p>
             <p className="about-paragraph">
-              Whether you're a startup or an enterprise, our team brings strategic insight and technical mastery to your project—maximizing results with minimum friction.
+              Whether you&apos;re a startup or an enterprise, our team brings strategic insight and technical mastery to your project—maximizing results with minimum friction.
             </p>
             <a href="#" className="about-btn">Learn More</a>
           </div>

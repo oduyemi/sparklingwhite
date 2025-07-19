@@ -36,7 +36,7 @@ export const Why: React.FC = () => {
       <VStack spacing={6} mb={10}>
         <Heading fontSize="3xl" textAlign="center">Why Hire Sparkling White?</Heading>
         <Text fontSize="md" maxW="3xl" textAlign="center">
-          We go above and beyond to deliver premium cleaning services tailored to meet your needs. Here's why hundreds of UK households and businesses trust us.
+          We go above and beyond to deliver premium cleaning services tailored to meet your needs. Here&apos;s why hundreds of UK households and businesses trust us.
         </Text>
       </VStack>
 
