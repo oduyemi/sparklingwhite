@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import "./About.css"; 
 
-export const About: React.FC = () => {
+export const AboutHome: React.FC = () => {
   return (
     <section className="about-section">
       <div className="about-container">

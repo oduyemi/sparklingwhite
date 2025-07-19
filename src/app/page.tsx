@@ -1,4 +1,5 @@
-import { About } from "@/components/home/About";
+"use client";
+import { AboutHome } from "@/components/home/About";
 import { Banner } from "@/components/home/Banner";
 import { CTA } from "@/components/home/CTA";
 import { FAQ } from "@/components/home/FAQ";
@@ -7,12 +8,12 @@ import { OurServices } from "@/components/home/OurServices";
 import { PricingTable } from "@/components/home/PricingTable";
 
 
-export default function Home() {
+export default function Homepage() {
   return (
     <div>
       <Banner />
       <div>
-          <About />
+          <AboutHome />
       </div>
       <div>
         <OurServices />

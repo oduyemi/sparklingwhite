@@ -1,3 +1,4 @@
+"use client";
 import { CTA } from "@/components/home/CTA";
 import { WhyUs } from "@/components/home/Features";
 import { PricingTable } from "@/components/home/PricingTable";
@@ -6,7 +7,7 @@ import { ServicesBanner } from "@/components/services/Banner";
 
 
 
-export default function Services() {
+export default function Servicespage() {
   return (
     <div>
         <ServicesBanner />

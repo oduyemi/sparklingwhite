@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 const MotionBox = motion(Box);
 
-const NotFoundPage = () => {
+export default function NotFoundPage() {
   const router = useRouter();
 
   return (
@@ -51,5 +51,3 @@ const NotFoundPage = () => {
     </Box>
   );
 };
-
-export default NotFoundPage;

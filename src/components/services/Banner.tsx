@@ -6,7 +6,7 @@ import "animate.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Link from "next/link";
 
-const MotionBox = motion(Box); // ✅ extend Chakra Box with motion
+const MotionBox = motion(Box); 
 
 export const ServicesBanner: React.FC = () => {
   return (

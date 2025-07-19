@@ -1,12 +1,11 @@
-import { CareerBanner } from "@/components/careers/Banner";
+"use client";
 import { FAQ } from "@/components/home/FAQ";
 
 
 
-export default function About() {
+export default function FAQPage() {
   return (
     <div>
-        <CareerBanner />
         <FAQ />
     </div>
   );
