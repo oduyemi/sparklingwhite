@@ -47,7 +47,7 @@ const MotionBox = motion(Box);
 
 export const FAQ: React.FC = () => {
   const accentColor = "#00B4F2";
-  const iconBg = useColorModeValue("white", "gray.800");
+  // const iconBg = useColorModeValue("white", "gray.800");
 
   return (
     <Box bg="#f8f9fa" py={{ base: 16, md: 24 }} px={{ base: 6, md: 20 }}>

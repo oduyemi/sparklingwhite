@@ -32,10 +32,10 @@ export const AboutHome: React.FC = () => {
               Our decade of experience ensures your goals are met with expertise and precision.
             </p>
             <p className="about-paragraph">
-              Whether you're a startup or an enterprise, our team brings strategic insight and
+              Whether you&apos;re a startup or an enterprise, our team brings strategic insight and
               technical mastery to your project—maximizing results with minimum friction.
             </p>
-            <a href="#" className="about-btn">Learn More</a>
+            <a href="/about" className="about-btn">Learn More</a>
           </div>
         </div>
       </div>
