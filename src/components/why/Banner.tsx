@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Box, Heading, Text, HStack, Link as ChakraLink } from "@chakra-ui/react";
 import "animate.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import Link from "next/link";
 
 const MotionBox = motion(Box);

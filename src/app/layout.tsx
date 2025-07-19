@@ -5,11 +5,13 @@ import { ChakraProvider, Box } from "@chakra-ui/react";
 import "./globals.css";
 import "animate.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { TopHeader } from "@/navigation/TopHeader";
 import { Header } from "@/navigation/Header";
 import { Footer } from "@/navigation/Footer";
 import { WhatsAppChatButton } from "@/components/LiveChat";
 import Head from "next/head";
+import Script from "next/script";
 
 export default function RootLayout({
   children,
@@ -26,6 +28,7 @@ export default function RootLayout({
         <meta name="description" content="Reliable local cleaning & janitorial services" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
         {/* More icons if needed */}
       </Head>
       <body style={{ margin: 0, padding: 0 }}>
@@ -34,6 +37,10 @@ export default function RootLayout({
             {isAdminRoute ? children : <ClientSideLayout>{children}</ClientSideLayout>}
           </Box>
         </ChakraProvider>
+        <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

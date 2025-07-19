@@ -4,7 +4,7 @@ import { CareerBanner } from "@/components/careers/Banner";
 
 
 
-export default function Careerspage() {
+export default function Careers() {
   return (
     <div>
         <CareerBanner />

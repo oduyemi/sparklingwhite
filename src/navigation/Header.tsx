@@ -2,24 +2,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Transition } from "framer-motion";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-
-
-
-
-const spring: Transition = {
-  type: "spring",
-  stiffness: 260,
-  damping: 20,
-};
 
 export const Header: React.FC = () => {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
-    // { href: "/locations", label: "Locations" },
     { href: "/why-us", label: "Why Hire Us" },
     { href: "/contact", label: "Contact" },
   ];
@@ -59,7 +47,6 @@ export const Header: React.FC = () => {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle text-light"
-                  href="#"
                   id="navbarDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -85,6 +72,5 @@ export const Header: React.FC = () => {
         </div>
       </nav>
     </header>
-    
   );
 };
