@@ -4,7 +4,7 @@ import { Why } from "@/components/why/Why";
 
 
 
-export default function Whypage() {
+export default function WhyUs() {
   return (
     <div>
         <WhyBanner />

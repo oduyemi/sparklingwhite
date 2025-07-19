@@ -48,7 +48,7 @@ const perks = [
   "Supportive Team Culture",
 ];
 
-export const Careers = () => {
+export const Career = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

@@ -4,7 +4,7 @@ import { ContactsBanner } from "@/components/contact/Banner";
 
 
 
-export default function ContactPage() {
+export default function Contact() {
   return (
     <div>
         <ContactsBanner />

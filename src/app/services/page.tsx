@@ -7,7 +7,7 @@ import { ServicesBanner } from "@/components/services/Banner";
 
 
 
-export default function Servicespage() {
+export default function Services() {
   return (
     <div>
         <ServicesBanner />

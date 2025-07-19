@@ -8,7 +8,7 @@ import { OurServices } from "@/components/home/OurServices";
 import { PricingTable } from "@/components/home/PricingTable";
 
 
-export default function Homepage() {
+export default function Home() {
   return (
     <div>
       <Banner />

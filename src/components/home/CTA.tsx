@@ -34,7 +34,6 @@ export const CTA: React.FC = () => {
           <div className="col-md-3 text-md-end text-start">
             <Link href="/contact" passHref>
               <Button
-                as="a"
                 bg="white"
                 color="#00b4f2"
                 fontWeight="bold"

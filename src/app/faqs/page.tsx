@@ -3,7 +3,7 @@ import { FAQ } from "@/components/home/FAQ";
 
 
 
-export default function FAQPage() {
+export default function Faqs() {
   return (
     <div>
         <FAQ />

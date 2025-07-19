@@ -6,7 +6,7 @@ import { CTA } from "@/components/home/CTA";
 
 
 
-export default function Aboutpage() {
+export default function About() {
   return (
     <div>
         <AboutBanner />
