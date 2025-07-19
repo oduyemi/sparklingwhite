@@ -1,30 +1,50 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Button,
+  VStack,
+  useColorModeValue,
+  HStack,
+  Divider,
+  Stack,
+  Icon,
+} from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import "animate.css";
 
 const MotionBox = motion(Box);
 
-
 export const AboutIntro: React.FC = () => {
+  const textColor = useColorModeValue("gray.800", "gray.200");
+  const subTextColor = useColorModeValue("gray.600", "gray.400");
+
   return (
-    <Box className="about py-5">
+    <Box className="about py-5" bg={useColorModeValue("white", "gray.900")}>
       <div className="container">
-        <div className="row align-items-center gy-4">
+        <div className="row align-items-center gy-5">
           {/* Image Section */}
           <div className="col-lg-5 col-md-6">
             <MotionBox
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                borderRadius="md"
-                overflow="hidden"
-                boxShadow="md"
-                h="100%"
-                position="relative"
-                minH="300px"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              borderRadius="2xl"
+              overflow="hidden"
+              boxShadow="2xl"
+              h="100%"
+              position="relative"
+              minH="320px"
+              className="animate__animated animate__fadeInLeft"
+              _hover={{
+                transform: "scale(1.03)",
+                transition: "0.4s ease-in-out",
+              }}
             >
               <Image
                 src="/images/header.jpg"
@@ -38,38 +58,87 @@ export const AboutIntro: React.FC = () => {
           {/* Text Section */}
           <div className="col-lg-7 col-md-6">
             <MotionBox
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                color="#333"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              color={textColor}
             >
-              <Heading as="h2" size="xl" mb={4}>
-                <Text as="span" color="#00b4f2" fontWeight="bold" fontSize="5xl">
-                  10
-                </Text>{" "}
-                Years Experience
-              </Heading>
+              <VStack align="start" spacing={6}>
+                {/* Sleek Styled Heading */}
+                <Box>
+                  <Text
+                    fontSize="sm"
+                    color="#00b4f2"
+                    textTransform="uppercase"
+                    fontWeight="bold"
+                    letterSpacing="wider"
+                    mb={2}
+                  >
+                    Trusted & Detail-Oriented
+                  </Text>
 
-              <Text mb={3} fontSize="md" color="gray.600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
-              </Text>
+                  <Heading
+                    as="h2"
+                    fontSize={{ base: "2xl", md: "4xl", lg: "5xl" }}
+                    fontWeight="extrabold"
+                    lineHeight="short"
+                  >
+                    <Box as="span" color="#00b4f2" display="inline-block">
+                      Professional Cleaning
+                    </Box>{" "}
+                    <br />
+                    You Can Count On
+                  </Heading>
 
-              <Text mb={4} fontSize="md" color="gray.600">
-                Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
-              </Text>
+                  <Divider
+                    mt={4}
+                    mb={2}
+                    borderColor="#00b4f2"
+                    borderWidth="2px"
+                    width="60px"
+                    borderRadius="full"
+                  />
+                </Box>
 
-              <Button
-                as="a"
-                href="#"
-                bg="#00b4f2"
-                color="white"
-                _hover={{ bg: "#009ed3" }}
-                size="lg"
-                fontWeight="semibold"
-                borderRadius="full"
-              >
-                Learn More
-              </Button>
+                {/* Description Text */}
+                <Stack spacing={4}>
+                  <Text fontSize="lg" color={subTextColor}>
+                    Based in the UK, we may be a new name—but our team isn’t new to the job.
+                    With a strong foundation in cleaning and facility care, we bring reliability,
+                    precision, and a detail-driven approach to every space we service.
+                  </Text>
+
+                  <Text fontSize="lg" color={subTextColor}>
+                    Whether it’s residential, commercial, or industrial cleaning, our focus is
+                    simple: deliver spotless results, ensure peace of mind, and build lasting
+                    relationships through trust and quality.
+                  </Text>
+                </Stack>
+
+                {/* CTA */}
+                <Button
+                  as="a"
+                  href="#"
+                  bg="#00b4f2"
+                  color="white"
+                  size="lg"
+                  px={8}
+                  py={6}
+                  fontWeight="medium"
+                  borderRadius="full"
+                  rightIcon={<ChevronRightIcon />}
+                  boxShadow="lg"
+                  _hover={{
+                    bg: "#009ed3",
+                    boxShadow: "xl",
+                    transform: "translateY(-2px)",
+                  }}
+                  transition="all 0.3s ease-in-out"
+                >
+                  Learn More
+                </Button>
+              </VStack>
             </MotionBox>
           </div>
         </div>
