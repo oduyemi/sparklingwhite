@@ -23,7 +23,8 @@ export const Banner: React.FC = () => {
             <span className="text-white">Cleaning </span>Service
           </Heading>
           <p className="text-white fs-5 mb-4">
-            Lorem ipsum dolor sit amet elit pretium facilisis ornare
+            Hand over your cleaning to us.<br />
+            Your peace of mind is guaranteed.
           </p>
           <Button
             rightIcon={<FaBroom />}

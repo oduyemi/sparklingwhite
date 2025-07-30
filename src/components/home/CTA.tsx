@@ -26,7 +26,11 @@ export const CTA: React.FC = () => {
               Get A Free Cleaning Service
             </Heading>
             <Text fontSize="md">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              We offer a wide range of cleaning 
+              services including janitorial, 
+              carpet cleaning, upholstery 
+              cleaning and other specialty 
+              cleaning services
             </Text>
           </div>
 

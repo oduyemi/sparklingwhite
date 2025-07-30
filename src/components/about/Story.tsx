@@ -14,54 +14,31 @@ import "animate.css";
 
 const MotionBox = motion(Box);
 
-const timeline = [
+const coreValues = [
   {
-    date: "01 Jan 2018",
-    title: "Company Launch",
+    title: "Precision in Every Detail",
     description:
-      "Started with a mission to redefine cleanliness and client satisfaction. We began with just a team of 3.",
+      "We don’t just clean—we elevate environments. Our team approaches each task with care and attention, ensuring nothing is overlooked.",
   },
   {
-    date: "01 Jun 2018",
-    title: "100 Clients Milestone",
+    title: "Consistency You Can Trust",
     description:
-      "Crossed our first 100 happy clients and received glowing testimonials from home and business owners.",
+      "Whether it’s your home, office, or facility, we deliver the same high standard of service every time, building confidence through consistency.",
   },
   {
-    date: "01 Dec 2018",
-    title: "Expanded to 2 New Cities",
+    title: "Professionalism with Purpose",
     description:
-      "Successfully launched operations in two more cities, marking our first regional footprint.",
+      "We take pride in maintaining clear communication, respectful service, and dependable delivery from start to finish.",
   },
   {
-    date: "01 Jun 2019",
-    title: "Eco-Friendly Services",
+    title: "Care That Goes Beyond",
     description:
-      "Launched our eco-clean line using sustainable, non-toxic cleaning products.",
+      "We treat every space like it’s our own—with respect, integrity, and a commitment to leaving it better than we found it.",
   },
   {
-    date: "01 Dec 2019",
-    title: "1,000 Clients Served",
+    title: "Sustainability Matters",
     description:
-      "A huge leap! We surpassed 1,000 homes cleaned with consistent 5-star ratings.",
-  },
-  {
-    date: "01 Jun 2020",
-    title: "Mobile App Launch",
-    description:
-      "We introduced on-demand booking and service tracking via our mobile app.",
-  },
-  {
-    date: "01 Dec 2020",
-    title: "National Recognition",
-    description:
-      "Recognized nationally for cleaning excellence and customer service innovation.",
-  },
-  {
-    date: "Now",
-    title: "Today & Beyond",
-    description:
-      "Over 10,000+ spaces cleaned, and we’re just getting started. Join our journey.",
+      "We embrace eco-conscious practices by using non-toxic products and mindful processes to care for both your space and the environment.",
   },
 ];
 
@@ -77,18 +54,18 @@ export const Story: React.FC = () => {
           fontSize="lg"
           className="animate__animated animate__fadeInDown"
         >
-          Company Story
+          Our Values
         </Text>
         <Heading
           fontSize={{ base: "2xl", md: "4xl" }}
           className="animate__animated animate__fadeInUp"
         >
-          Learn About Our Journey
+          What We Stand For
         </Heading>
       </VStack>
 
       <VStack spacing={10}>
-        {timeline.map((item, index) => (
+        {coreValues.map((item, index) => (
           <MotionBox
             key={index}
             initial={{ opacity: 0, x: index % 2 === 0 ? -80 : 80 }}
@@ -101,27 +78,16 @@ export const Story: React.FC = () => {
               templateColumns={{ base: "1fr", md: "1fr 1fr" }}
               gap={6}
               alignItems="start"
-            //   direction={index % 2 === 0 ? "row" : "row-reverse"}
             >
               <GridItem
-                order={{ base: 2, md: index % 2 === 0 ? 1 : 2 }}
+                order={{ base: 1, md: index % 2 === 0 ? 1 : 2 }}
                 display="flex"
                 justifyContent={{ base: "center", md: "flex-start" }}
                 flexDirection="column"
-              >
-                <Text
-                  fontWeight="semibold"
-                  fontSize="sm"
-                  color="gray.500"
-                  mb={2}
-                  textAlign={{ base: "center", md: "left" }}
-                >
-                  {item.date}
-                </Text>
-              </GridItem>
+              ></GridItem>
 
               <GridItem
-                order={{ base: 1, md: index % 2 === 0 ? 2 : 1 }}
+                order={{ base: 2, md: index % 2 === 0 ? 2 : 1 }}
                 bg="gray.50"
                 borderLeft="5px solid #00b4f2"
                 p={6}

@@ -104,15 +104,20 @@ export const AboutIntro: React.FC = () => {
                 {/* Description Text */}
                 <Stack spacing={4}>
                   <Text fontSize="lg" color={subTextColor}>
-                    Based in the UK, we may be a new name—but our team isn’t new to the job.
-                    With a strong foundation in cleaning and facility care, we bring reliability,
-                    precision, and a detail-driven approach to every space we service.
+                    Based in the UK, we bring a strong 
+                    foundation in cleaning and facility 
+                    care, delivering reliability, precision, 
+                    and a detail-driven approach to every 
+                    space we service.
                   </Text>
-
                   <Text fontSize="lg" color={subTextColor}>
-                    Whether it’s residential, commercial, or industrial cleaning, our focus is
-                    simple: deliver spotless results, ensure peace of mind, and build lasting
-                    relationships through trust and quality.
+                    From residential and commercial 
+                    properties to industrial sites, 
+                    our focus is simple: deliver 
+                    spotless results, ensure peace 
+                    of mind, and build lasting 
+                    relationships through trust 
+                    and quality.
                   </Text>
                 </Stack>
 

@@ -28,13 +28,16 @@ export const AboutHome: React.FC = () => {
               We Deliver <span className="accent">Immaculate Results</span>
             </h2>
             <p className="about-subtext">
-              We may be new on the scene, but our approach is backed by years of experience across
-              residential, commercial, and industrial cleaning. Based in the UK, our promise is simple:
-              precision, reliability, and care.
+              With a foundation built on years of hands-on 
+              experience across residential, commercial, 
+              and industrial cleaning, we deliver precision, 
+              reliability, and care in every service.              
             </p>
             <p className="about-subtext">
-              Every space we clean is treated with meticulous attention to detail—because we believe
-              cleanliness isn&apos;t just a service, it&apos;s a standard.
+              Based in the UK, our team approaches each 
+              space with meticulous attention to detail—because 
+              to us, cleanliness isn&apos;t just a task, 
+              it&apos;s a standard we uphold.
             </p>
             <a href="/about" className="about-button">
               Learn More

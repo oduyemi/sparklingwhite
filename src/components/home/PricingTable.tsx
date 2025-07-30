@@ -8,73 +8,83 @@ import {
   Button,
   Icon,
   useColorModeValue,
+  Divider,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import {
-  FaHome,
-  FaStar,
-  FaGift,
-  FaShoppingCart,
-} from "react-icons/fa";
+import { FaHome, FaStar, FaGift, FaShoppingCart } from "react-icons/fa";
 import "animate.css";
+import { BookingFormDialog } from "@/dialog/BookingDialog";
 
 const plans = [
   {
-    name: "Standard",
+    name: "Standard Cleaning",
     icon: FaHome,
+    priceRange: "£15 - £25",
     price: 99,
+    description: "Perfect for regular tidy-ups",
     features: [
-      "3 Bedrooms cleaning",
-      "2 Bathrooms cleaning",
-      "1 Living room cleaning",
-      "Vacuum Cleaning",
-      "Within 6 Hours",
+      "3 Bedrooms",
+      "2 Bathrooms",
+      "1 Living Room",
+      "Vacuum & Dusting",
+      "Completed Within 6 Hours",
     ],
   },
   {
-    name: "Premium",
+    name: "Deep Cleaning",
     icon: FaStar,
+    priceRange: "Up to £40",
     price: 149,
+    description: "Detailed top-to-bottom cleaning",
     features: [
-      "5 Bedrooms cleaning",
-      "3 Bathrooms cleaning",
-      "2 Living rooms",
-      "Vacuum Cleaning",
-      "Within 6 Hours",
+      "5 Bedrooms",
+      "3 Bathrooms",
+      "2 Living Rooms",
+      "Appliance Cleaning",
+      "Completed Within 6 Hours",
     ],
     featured: true,
   },
   {
-    name: "Enterprise",
+    name: "Full Home Service",
     icon: FaGift,
+    priceRange: "Custom Quote",
     price: 199,
+    description: "For large homes or special events",
     features: [
-      "8 Bedrooms cleaning",
-      "5 Bathrooms cleaning",
-      "3 Living rooms",
-      "Vacuum Cleaning",
-      "Within 12 Hours",
+      "8 Bedrooms",
+      "5 Bathrooms",
+      "3 Living Rooms",
+      "Full-Scale Deep Clean",
+      "Completed Within 12 Hours",
     ],
   },
 ];
 
 export const PricingTable: React.FC = () => {
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [selectedPlan, setSelectedPlan] = React.useState<string | undefined>();
+
   return (
     <Box
       className="price animate__animated animate__fadeInUp"
       py={{ base: 12, md: 20 }}
+      px={4}
       bg={useColorModeValue("#f7f9fb", "#1A202C")}
     >
-      <div className="container text-center mb-5">
+      <Box textAlign="center" mb={12}>
         <Text color="#00B4F2" fontWeight="bold" textTransform="uppercase" mb={2}>
           Pricing Plan
         </Text>
         <Heading color="#004646" fontSize="3xl">
-          No Extra Hidden Charges
+          Transparent & Flexible
         </Heading>
-      </div>
+        <Text mt={2} fontSize="sm" color="gray.600">
+          No hidden fees. Choose the right plan for your space.
+        </Text>
+      </Box>
 
-      <div className="container">
+      <Box className="container">
         <div className="row">
           {plans.map((plan, index) => (
             <motion.div
@@ -87,28 +97,31 @@ export const PricingTable: React.FC = () => {
             >
               <Box
                 className={`price-item ${plan.featured ? "featured-item" : ""}`}
-                borderRadius="md"
+                borderRadius="2xl"
                 boxShadow="lg"
                 overflow="hidden"
                 bg="white"
-                _hover={{ transform: "translateY(-5px)", boxShadow: "2xl" }}
-                transition="all 0.3s"
+                _hover={{ transform: "translateY(-8px)", boxShadow: "2xl" }}
+                transition="all 0.3s ease"
+                mb={8}
               >
                 {/* Header */}
                 <Box
                   py={8}
-                  bg={plan.featured ? "#00539C" : "#00B4F2"}
+                  px={6}
+                  bg={plan.featured ? "#004646" : "#00B4F2"}
                   color={plan.featured ? "white" : "black"}
+                  textAlign="center"
                 >
                   <Icon as={plan.icon} boxSize={10} mb={2} />
                   <Heading fontSize="xl" mb={1}>
                     {plan.name}
                   </Heading>
-                  <Heading fontSize="4xl" fontWeight="light">
-                    <Box as="small" fontSize="md" mr={1}>
-                      £
-                    </Box>
-                    {plan.price}
+                  <Text fontSize="sm" mb={2}>
+                    {plan.description}
+                  </Text>
+                  <Heading fontSize="3xl" fontWeight="bold">
+                    {plan.priceRange}
                   </Heading>
                 </Box>
 
@@ -116,30 +129,33 @@ export const PricingTable: React.FC = () => {
                 <VStack
                   spacing={3}
                   py={6}
-                  bg="white"
                   px={6}
                   align="stretch"
-                  borderTopRadius="30px"
-                  mt={-6}
-                  zIndex={1}
                   position="relative"
+                  bg="white"
                 >
                   {plan.features.map((feature, i) => (
                     <Text
                       key={i}
                       fontSize="sm"
+                      color="gray.700"
                       borderBottom="1px solid #eee"
                       pb={2}
-                      color="#2A293E"
                     >
                       {feature}
                     </Text>
                   ))}
                 </VStack>
 
+                <Divider />
+
                 {/* Footer */}
-                <Box py={6} bg="white">
+                <Box py={6} px={6} bg="white" textAlign="center">
                   <Button
+                    onClick={() => {
+                      setSelectedPlan(plan.name);
+                      setIsDialogOpen(true);
+                    }}
                     color={plan.featured ? "white" : "black"}
                     bg={plan.featured ? "#00539C" : "#00B4F2"}
                     _hover={{
@@ -148,7 +164,8 @@ export const PricingTable: React.FC = () => {
                     }}
                     leftIcon={<FaShoppingCart />}
                     size="lg"
-                    borderRadius="md"
+                    borderRadius="full"
+                    w="full"
                   >
                     Book Now
                   </Button>
@@ -157,7 +174,12 @@ export const PricingTable: React.FC = () => {
             </motion.div>
           ))}
         </div>
-      </div>
+      </Box>
+        <BookingFormDialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          selectedPlan={selectedPlan}
+        />
     </Box>
   );
 };

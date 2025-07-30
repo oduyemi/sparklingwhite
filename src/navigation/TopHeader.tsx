@@ -15,10 +15,10 @@ export const TopHeader: React.FC = () => {
     <div className="bg-dark text-light py-2">
       <div className="container-fluid d-flex justify-content-end align-items-center flex-wrap gap-3">
         <Link
-          href="tel:+447596288123"
+          href="tel:+442073629059"
           className="text-decoration-none text-light small d-flex align-items-center gap-2"
         >
-          <FaPhoneAlt /> +44 7596 288123
+          <FaPhoneAlt /> +44 2073 629059 7596
         </Link>
 
         <Link
