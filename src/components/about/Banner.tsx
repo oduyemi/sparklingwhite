@@ -44,7 +44,6 @@ export const AboutBanner: React.FC = () => {
         >
             About Us
           </ChakraLink>
-        </Link>
       </HStack>
     </MotionBox>
   );
