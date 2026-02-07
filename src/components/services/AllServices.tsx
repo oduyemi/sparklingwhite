@@ -234,6 +234,7 @@ const SignatureSection = ({
   cardBg,
   borderColor,
   onBook,
+  // @typescript-eslint/no-explicit-any
 }: any) => (
   <Stack spacing={12}>
     <Heading size="lg" fontWeight="800" color="teal.700">{title}</Heading>
@@ -264,6 +265,7 @@ const SignatureSection = ({
         </Stack>
       </MotionBox>
 
+      {/* @typescript-eslint/no-explicit-any */}
       <Stack spacing={4}>
         {data.others.map((s: any) => (
           <Box key={s.title} p={5} borderRadius="xl" border={`1px solid ${borderColor}`}>
