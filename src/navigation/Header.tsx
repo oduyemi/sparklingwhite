@@ -16,10 +16,8 @@ export const Header: React.FC = () => {
     <header className="shadow-sm" style={{ backgroundColor: "#004646" }}>
       <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#004646" }}>
         <div className="container-fluid">
-          <Link href="/" passHref legacyBehavior>
-            <a className="navbar-brand d-flex align-items-center">
-              <Image src="/images/logo/logo.png" alt="Logo" width={70} height={40} />
-            </a>
+          <Link href="/" className="navbar-brand d-flex align-items-center">
+            <Image src="/images/logo/logo.png" alt="Logo" width={70} height={40} />
           </Link>
 
           <button
@@ -38,8 +36,8 @@ export const Header: React.FC = () => {
             <ul className="navbar-nav mb-2 mb-lg-0 gap-lg-3">
               {navItems.map((item) => (
                 <li className="nav-item" key={item.href}>
-                  <Link href={item.href} passHref legacyBehavior>
-                    <a className="nav-link text-light">{item.label}</a>
+                  <Link href={item.href} className="nav-link text-light">
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -56,13 +54,13 @@ export const Header: React.FC = () => {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>
-                    <Link href="/careers" passHref legacyBehavior>
-                      <a className="dropdown-item">Careers</a>
+                    <Link href="/careers" className="dropdown-item">
+                      Careers
                     </Link>
                   </li>
                   <li>
-                    <Link href="/faqs" passHref legacyBehavior>
-                      <a className="dropdown-item">FAQs</a>
+                    <Link href="/faqs" className="dropdown-item">
+                      FAQs
                     </Link>
                   </li>
                 </ul>

@@ -26,17 +26,23 @@ export const WhyBanner: React.FC = () => {
 
       <HStack spacing={2} justify="center" fontSize="sm" fontWeight="medium">
         <i className="bi bi-house" style={{ fontSize: "1rem" }}></i>
-        <Link href="/" passHref>
-          <ChakraLink color="whiteAlpha.800" _hover={{ color: "white" }}>
+        <ChakraLink
+          as={Link}
+          href="/"
+          color="whiteAlpha.800"
+          _hover={{ color: "white" }}
+        >
             Home
           </ChakraLink>
-        </Link>
         <Text>/</Text>
-        <Link href="/why-us" passHref>
-          <ChakraLink color="white" fontWeight="bold">
+        <ChakraLink
+          as={Link}
+          href="/why-us"
+          color="whiteAlpha.800"
+          _hover={{ color: "white" }}
+        >
             Why Hire Us?
           </ChakraLink>
-        </Link>
       </HStack>
     </MotionBox>
   );
