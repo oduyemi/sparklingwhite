@@ -6,7 +6,7 @@ import {
   Text,
   SimpleGrid,
   VStack,
-  useDisclosure,
+  // useDisclosure,
   Divider,
 } from "@chakra-ui/react";
 import { Transition, motion } from "framer-motion";
@@ -49,7 +49,7 @@ const perks = [
 ];
 
 export const Career = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <motion.div

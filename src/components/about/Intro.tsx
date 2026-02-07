@@ -8,10 +8,8 @@ import {
   Button,
   VStack,
   useColorModeValue,
-  HStack,
   Divider,
   Stack,
-  Icon,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Image from "next/image";

@@ -7,7 +7,7 @@ import {
   VStack,
   Grid,
   GridItem,
-  useBreakpointValue,
+  // useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import "animate.css";
@@ -43,7 +43,7 @@ const coreValues = [
 ];
 
 export const Story: React.FC = () => {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  // const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <Box bg="white" py={{ base: 10, md: 16 }} px={{ base: 4, sm: 6 }} maxW="6xl" mx="auto">

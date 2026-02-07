@@ -10,7 +10,6 @@ import {
   Heading,
   Text,
   Icon,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
