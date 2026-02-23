@@ -14,6 +14,7 @@ import {
   FormLabel,
   VStack,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
@@ -29,6 +30,8 @@ export const BookingFormDialog: React.FC<BookingFormDialogProps> = ({
   selectedPlan = "",
 }) => {
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,31 +40,72 @@ export const BookingFormDialog: React.FC<BookingFormDialogProps> = ({
     date: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
 
-    // Simulate API or handle submission
-    toast({
-      title: "Booking Submitted",
-      description: `Thank you, ${formData.name}. We'll contact you shortly.`,
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
+    setLoading(true);
 
-    onClose();
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      date: "",
-    });
+    try {
+      const response = await fetch("https://formspree.io/f/mbdapqel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          plan: selectedPlan,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Booking Submitted",
+          description: `Thank you, ${formData.name}. We'll contact you shortly.`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          date: "",
+        });
+
+        onClose();
+      } else {
+        toast({
+          title: "Submission Failed",
+          description:
+            result?.error || "Something went wrong. Please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Network Error",
+        description: "Please check your connection and try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -70,6 +114,7 @@ export const BookingFormDialog: React.FC<BookingFormDialogProps> = ({
       <ModalContent borderRadius="xl" p={4}>
         <ModalHeader>Book: {selectedPlan}</ModalHeader>
         <ModalCloseButton />
+
         <ModalBody>
           <form onSubmit={handleSubmit}>
             <VStack spacing={4} align="stretch">
@@ -128,11 +173,15 @@ export const BookingFormDialog: React.FC<BookingFormDialogProps> = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={onClose} variant="ghost" mr={3}>
+          <Button onClick={onClose} variant="ghost" mr={3} isDisabled={loading}>
             Cancel
           </Button>
-          <Button colorScheme="blue" onClick={handleSubmit}>
-            Confirm Booking
+          <Button
+            colorScheme="blue"
+            onClick={handleSubmit}
+            isDisabled={loading}
+          >
+            {loading ? <Spinner size="sm" /> : "Confirm Booking"}
           </Button>
         </ModalFooter>
       </ModalContent>

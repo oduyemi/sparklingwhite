@@ -13,7 +13,9 @@ export const Footer: React.FC = () => {
                 <div className="col-md-6 col-lg-3">
                     <div className="footer-contact">
                         <h2>Get In Touch</h2>
-                        <p><i className="fa fa-map-marker-alt"></i>Flat 1, Walton road , East Molesey. Surrey . United Kingdom . KT8 0HP</p>
+                        <p><i className="fa fa-map-marker-alt"></i>
+                            5 Flint Street, Allenton <br />Derby, Derbyshire DE24 9BH
+                        </p>
                         <p><i className="fa fa-phone-alt"></i>+447596288123</p>
                         <p><i className="fa fa-envelope"></i>sparklingwhitelimite@gmail.com</p>
                         <div className="footer-social">

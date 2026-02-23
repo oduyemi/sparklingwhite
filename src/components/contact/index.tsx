@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -15,6 +15,9 @@ import {
   FormControl,
   FormLabel,
   useBreakpointValue,
+  Alert,
+  AlertIcon,
+  Spinner,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import "animate.css";
@@ -24,14 +27,94 @@ const MotionBox = motion(Box);
 export const ContactUs: React.FC = () => {
   const formSpacing = useBreakpointValue({ base: 4, md: 6 });
 
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"success" | "error" | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { placeholder, value } = e.target;
+
+    if (placeholder === "Enter your name") {
+      setFormData((prev) => ({ ...prev, name: value }));
+    } else if (placeholder === "Enter your email") {
+      setFormData((prev) => ({ ...prev, email: value }));
+    } else if (placeholder === "Subject of your message") {
+      setFormData((prev) => ({ ...prev, subject: value }));
+    } else {
+      setFormData((prev) => ({ ...prev, message: value }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setStatus("error");
+      setErrorMessage("Please complete all required fields.");
+      return;
+    }
+
+    setLoading(true);
+    setStatus(null);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("https://formspree.io/f/xqedgnaq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setStatus("error");
+        setErrorMessage(
+          result?.error || "Something went wrong. Please try again."
+        );
+      }
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage("Network error. Please try again.");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <Box bg="white" py={16} px={{ base: 4, md: 12 }} className="contact">
       <div className="container">
         <VStack spacing={4} textAlign="center" mb={10}>
-          <p className="animate__animated animate__fadeInDown" style={{ color: "#00b4f2", fontWeight: "bold" }}>
+          <p
+            className="animate__animated animate__fadeInDown"
+            style={{ color: "#00b4f2", fontWeight: "bold" }}
+          >
             Contact Us
           </p>
-          <Heading fontSize={{ base: "2xl", md: "4xl" }} className="animate__animated animate__fadeInUp">
+          <Heading
+            fontSize={{ base: "2xl", md: "4xl" }}
+            className="animate__animated animate__fadeInUp"
+          >
             Got Questions or Need Help?
           </Heading>
         </VStack>
@@ -95,27 +178,59 @@ export const ContactUs: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <form>
+              <form onSubmit={handleSubmit}>
                 <VStack spacing={formSpacing}>
                   <FormControl isRequired>
                     <FormLabel>Your Name</FormLabel>
-                    <Input placeholder="Enter your name" />
+                    <Input
+                      placeholder="Enter your name"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
                   </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel>Email Address</FormLabel>
-                    <Input type="email" placeholder="Enter your email" />
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
                   </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel>Subject</FormLabel>
-                    <Input placeholder="Subject of your message" />
+                    <Input
+                      placeholder="Subject of your message"
+                      value={formData.subject}
+                      onChange={handleChange}
+                    />
                   </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel>Message</FormLabel>
-                    <Textarea rows={5} placeholder="Your message here..." />
+                    <Textarea
+                      rows={5}
+                      placeholder="Your message here..."
+                      value={formData.message}
+                      onChange={handleChange}
+                    />
                   </FormControl>
+
+                  {status === "success" && (
+                    <Alert status="success" borderRadius="md">
+                      <AlertIcon />
+                      Your message has been sent successfully!
+                    </Alert>
+                  )}
+
+                  {status === "error" && (
+                    <Alert status="error" borderRadius="md">
+                      <AlertIcon />
+                      {errorMessage}
+                    </Alert>
+                  )}
 
                   <Button
                     bg="#00b4f2"
@@ -124,8 +239,9 @@ export const ContactUs: React.FC = () => {
                     type="submit"
                     size="lg"
                     w="full"
+                    isDisabled={loading}
                   >
-                    Send Message
+                    {loading ? <Spinner size="sm" /> : "Send Message"}
                   </Button>
                 </VStack>
               </form>
