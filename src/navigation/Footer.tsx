@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
                             5 Flint Street, Allenton <br />Derby, Derbyshire DE24 9BH
                         </p>
                         <p><i className="fa fa-phone-alt"></i>+447596288123</p>
-                        <p><i className="fa fa-envelope"></i>sparklingwhitelimite@gmail.com</p>
+                        <p><i className="fa fa-envelope"></i>sparklingwhitelimited@gmail.com <br /><i className="fa fa-envelope"></i>info@sparklingwhitelimited.co.uk</p>
                         <div className="footer-social">
                             <Link href=""><i className="fab fa-twitter"></i></Link>
                             <Link href=""><i className="fab fa-facebook-f"></i></Link>
