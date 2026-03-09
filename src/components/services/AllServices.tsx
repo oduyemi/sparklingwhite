@@ -22,6 +22,8 @@ import {
   Badge,
   Divider,
   Select,
+  Checkbox,
+  CheckboxGroup,
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -37,12 +39,59 @@ import {
   FaWarehouse,
   FaClinicMedical,
 } from "react-icons/fa";
+import { loadStripe } from "@stripe/stripe-js";
+import StripeCardForm from "../StripeCardForm";
+import { Elements } from "@stripe/react-stripe-js";
+
+
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const MotionBox = motion(Box);
 const MotionSelect = motion(Select);
 
 const BRAND = "#00B4F2";
 const BRANDG = "#004646";
+
+const DOMESTIC_BASE_PRICES = [
+  { label: "Studio Flat (Appliances)", price: 130 },
+  { label: "1 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 165 },
+  { label: "2 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 195 },
+  { label: "2 Bed • 2 Bath + Kitchen & Living (Appliances)", price: 240 },
+  { label: "3 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 270 },
+  { label: "3 Bed • 2 Bath + Kitchen & Living (Appliances)", price: 295 },
+  { label: "4 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 330 },
+  { label: "4 Bed • 2 Bath + Kitchen & Living (Appliances)", price: 360 },
+  { label: "5 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 400 },
+  { label: "5 Bed • 2 Bath + Kitchen & Living (Appliances)", price: 445 },
+  { label: "6 Bed • 1 Bath + Kitchen & Living (Appliances)", price: 480 },
+  { label: "6 Bed • 2 Bath + Kitchen & Living (Appliances)", price: 525 },
+];
+
+const DOMESTIC_ADDONS = [
+  { label: "Conservatory", price: 40 },
+  { label: "Cloakroom", price: 20 },
+  { label: "Balcony", price: 25 },
+  { label: "Garage", price: 35 },
+  { label: "Additional Kitchen", price: 45 },
+  { label: "Additional Living Room", price: 40 },
+  { label: "Study", price: 25 },
+  { label: "Utility Room", price: 20 },
+  { label: "Ensuite", price: 30 },
+  { label: "Double Oven", price: 35 },
+  { label: "AGA Oven", price: 55 },
+  { label: "Washing Machine", price: 20 },
+  { label: "Dish Washer", price: 20 },
+  { label: "Tumble Dryer", price: 20 },
+  { label: "Range Cooker", price: 40 },
+  { label: "Cooker", price: 35 },
+  { label: "Hood", price: 20 },
+  { label: "Fridge", price: 20 },
+  { label: "Freezer", price: 20 },
+  { label: "Extractor Fan", price: 20 },
+];
 
 const SERVICE_MAP = {
   Residential: [
@@ -94,7 +143,9 @@ const commercial = {
 
 export const AllServices = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [basePrice, setBasePrice] = useState<number | null>(null);
+  const [addons, setAddons] = useState<string[]>([]);
+  const [clientSecret, setClientSecret] = useState("");
   const [serviceType, setServiceType] = useState<"Residential" | "Commercial" | "">("");
   const [selectedService, setSelectedService] = useState("");
   const [serviceTypeLocked, setServiceTypeLocked] = useState(false);
@@ -107,6 +158,26 @@ export const AllServices = () => {
     "rgba(255,255,255,0.6)",
     "rgba(255,255,255,0.1)"
   );
+
+  const totalPrice =
+  (basePrice || 0) +
+  addons.reduce((acc, addonLabel) => {
+    const addon = DOMESTIC_ADDONS.find(a => a.label === addonLabel);
+    return acc + (addon?.price || 0);
+  }, 0);
+
+  const startPayment = async () => {
+    const res = await fetch("/api/create-payment-intent", {
+      method: "POST",
+      body: JSON.stringify({
+        amount: totalPrice,
+      }),
+    });
+  
+    const data = await res.json();
+  
+    setClientSecret(data.clientSecret);
+  };
 
   const openBooking = (
     type: "Residential" | "Commercial",
@@ -122,6 +193,8 @@ export const AllServices = () => {
     setServiceType("");
     setSelectedService("");
     setServiceTypeLocked(false);
+    setBasePrice(null);
+    setAddons([]);
     onClose();
   };
 
@@ -166,62 +239,109 @@ export const AllServices = () => {
             Book {selectedService || "Service"}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <Stack spacing={4}>
-              <Input placeholder="Full Name" size="lg" borderRadius="xl" />
-              <Input placeholder="Email" size="lg" borderRadius="xl" />
-              <Input placeholder="Phone Number" size="lg" borderRadius="xl" />
-              <Input placeholder="Address" size="lg" borderRadius="xl" />
+            <ModalBody>
+              {selectedService === "Domestic Cleaning" ? (
+                <Stack spacing={6}>
+                  
+                  {/* Property Size */}
+                  <Box>
+                    <Text fontWeight="600" mb={2}>
+                      Property Size
+                    </Text>
+                    <Select
+                      placeholder="Select Property Size"
+                      onChange={(e) => {
+                        const selected = DOMESTIC_BASE_PRICES.find(
+                          (p) => p.label === e.target.value
+                        );
+                        setBasePrice(selected?.price || 0);
+                      }}
+                    >
+                      {DOMESTIC_BASE_PRICES.map((p) => (
+                        <option key={p.label} value={p.label}>
+                          {p.label} — £{p.price}
+                        </option>
+                      ))}
+                    </Select>
+                  </Box>
 
-              {/* LOCKED SERVICE TYPE */}
-              <Select
-                size="lg"
-                borderRadius="xl"
-                value={serviceType}
-                isDisabled={serviceTypeLocked}
-              >
-                <option value="">Select Service Type</option>
-                <option value="Residential">Residential</option>
-                <option value="Commercial">Commercial</option>
-              </Select>
+                  {/* Add-ons */}
+                  <Box>
+                    <Text fontWeight="600" mb={3}>
+                      Extra Services
+                    </Text>
 
-              {/* ANIMATED SERVICE DROPDOWN */}
-              <AnimatePresence mode="wait">
-                {serviceType && (
-                  <MotionSelect
-                    key={serviceType}
+                    <CheckboxGroup>
+                      <Stack spacing={2}>
+                        {DOMESTIC_ADDONS.map((a) => (
+                          <Checkbox
+                            key={a.label}
+                            isChecked={addons.includes(a.label)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setAddons([...addons, a.label]);
+                              } else {
+                                setAddons(addons.filter((x) => x !== a.label));
+                              }
+                            }}
+                          >
+                            {a.label} — £{a.price}
+                          </Checkbox>
+                        ))}
+                      </Stack>
+                    </CheckboxGroup>
+                  </Box>
+
+                  {/* Price Summary */}
+                  <Box p={4} borderRadius="lg" bg="gray.50">
+                    <Text fontWeight="700">Total Price</Text>
+                    <Heading size="lg">£{totalPrice}</Heading>
+                  </Box>
+
+                  {/* Stripe Checkout */}
+                  {clientSecret ? (
+                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                      <StripeCardForm clientSecret={clientSecret} />
+                    </Elements>
+                  ) : (
+                    <Button
+                      size="lg"
+                      borderRadius="xl"
+                      bgGradient={`linear(to-r, ${BRAND}, #009ed6)`}
+                      color="white"
+                      onClick={startPayment}
+                      isDisabled={!basePrice}
+                    >
+                      Pay £{totalPrice}
+                    </Button>
+                  )}
+
+                </Stack>
+              ) : (
+                <Stack spacing={4}>
+                  <Input placeholder="Full Name" size="lg" borderRadius="xl" />
+                  <Input placeholder="Email" size="lg" borderRadius="xl" />
+                  <Input placeholder="Phone Number" size="lg" borderRadius="xl" />
+                  <Input placeholder="Address" size="lg" borderRadius="xl" />
+
+                  <Textarea
+                    placeholder="Service details..."
+                    rows={4}
+                    borderRadius="xl"
+                  />
+
+                  <Button
                     size="lg"
                     borderRadius="xl"
-                    value={selectedService}
-                    onChange={(e) => setSelectedService(e.target.value)}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    bgGradient={`linear(to-r, ${BRAND}, #009ed6)`}
+                    color="white"
+                    fontWeight="700"
                   >
-                    <option value="">Select Service</option>
-                    {SERVICE_MAP[serviceType].map((service) => (
-                      <option key={service} value={service}>
-                        {service}
-                      </option>
-                    ))}
-                  </MotionSelect>
-                )}
-              </AnimatePresence>
-
-              <Textarea placeholder="Service details..." rows={4} borderRadius="xl" />
-
-              <Button
-                size="lg"
-                borderRadius="xl"
-                bgGradient={`linear(to-r, ${BRAND}, #009ed6)`}
-                color="white"
-                fontWeight="700"
-              >
-                Confirm Booking
-              </Button>
-            </Stack>
-          </ModalBody>
+                    Confirm Booking
+                  </Button>
+                </Stack>
+              )}
+            </ModalBody>
         </ModalContent>
       </Modal>
     </Box>

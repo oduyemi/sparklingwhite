@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { FaBroom } from "react-icons/fa";
 import "animate.css";
+import Link from "next/link";
 
 export const Banner: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -77,16 +78,18 @@ export const Banner: React.FC = () => {
             <br />
             Your peace of mind is guaranteed.
           </p>
-          <Button
-            rightIcon={<FaBroom />}
-            size="lg"
-            color="#00539C"
-            bg="white"
-            _hover={{ bg: "#00B4F2", color: "white" }}
-            textTransform="uppercase"
-          >
-            Explore Now
-          </Button>
+          <Link href="/services">
+            <Button
+              rightIcon={<FaBroom />}
+              size="lg"
+              color="#00539C"
+              bg="white"
+              _hover={{ bg: "#00B4F2", color: "white" }}
+              textTransform="uppercase"
+            >
+              Explore Now
+            </Button>
+          </Link>
         </motion.div>
 
         {/* Right Quote Form */}
