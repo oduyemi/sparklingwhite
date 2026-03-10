@@ -1,5 +1,5 @@
+/* eslint-disable */
 "use client";
-
 import React, { useState } from "react";
 import Image from "next/image";
 import {
@@ -100,12 +100,28 @@ export const OurServices: React.FC = () => {
   const [basePrice, setBasePrice] = useState<number>(0);
   const [addons, setAddons] = useState<string[]>([]);
   const [clientSecret, setClientSecret] = useState("");
+  const [propertySize, setPropertySize] = useState("");
+  const [loadingIntent, setLoadingIntent] = useState(false);
+  const [customer, setCustomer] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
 
   const openBooking = (service: string) => {
     setSelectedService(service);
     setBasePrice(0);
     setAddons([]);
     setClientSecret("");
+    setPropertySize("");
+  
+    setCustomer({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    });
   };
 
   const closeBooking = () => {
@@ -119,18 +135,39 @@ export const OurServices: React.FC = () => {
       return acc + (addon?.price || 0);
     }, 0);
 
-  const createPaymentIntent = async () => {
-    const res = await fetch("/api/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: totalPrice }),
-    });
-
-    const data = await res.json();
-    setClientSecret(data.clientSecret);
-  };
+    const createPaymentIntent = async () => {
+      try {
+        setLoadingIntent(true);
+    
+        const res = await fetch("/api/create-payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer,
+            service: selectedService,
+            propertySize,
+            addons,
+          }),
+        });
+        
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error);
+        }
+        
+        const data = await res.json();
+        setClientSecret(data.clientSecret);
+        
+        if (!data.clientSecret) {
+          throw new Error("Failed to initialize payment");
+        }
+        
+      } catch (err) {
+        console.error("Payment init error:", err);
+      } finally {
+        setLoadingIntent(false);
+      }
+    };
 
   return (
     <Box py={16} bg="#f8f9fa">
@@ -217,6 +254,7 @@ export const OurServices: React.FC = () => {
                     (p) => p.label === e.target.value
                   );
                   setBasePrice(selected?.price || 0);
+                  setPropertySize(e.target.value);
                 }}
               >
                 {DOMESTIC_BASE_PRICES.map((p) => (
@@ -227,11 +265,7 @@ export const OurServices: React.FC = () => {
               </Select>
 
               <Text fontWeight="bold">Add-ons</Text>
-
-              <CheckboxGroup
-                value={addons}
-                onChange={(val) => setAddons(val as string[])}
-              >
+              <CheckboxGroup value={addons} onChange={(val) => setAddons(val as string[])}>
                 <Stack>
                   {DOMESTIC_ADDONS.map((addon) => (
                     <Checkbox key={addon.label} value={addon.label}>
@@ -241,21 +275,78 @@ export const OurServices: React.FC = () => {
                 </Stack>
               </CheckboxGroup>
 
-              {totalPrice > 0 && (
+              <Text fontWeight="bold">Your Details</Text>
+                <Stack spacing={3}>
+                  <input
+                    placeholder="Full Name"
+                    value={customer.name}
+                    onChange={(e) =>
+                      setCustomer({ ...customer, name: e.target.value })
+                    }
+                  />
+
+                  <input
+                    placeholder="Email"
+                    value={customer.email}
+                    onChange={(e) =>
+                      setCustomer({ ...customer, email: e.target.value })
+                    }
+                  />
+
+                  <input
+                    placeholder="Phone"
+                    value={customer.phone}
+                    onChange={(e) =>
+                      setCustomer({ ...customer, phone: e.target.value })
+                    }
+                  />
+
+                  <input
+                    placeholder="Service Address"
+                    value={customer.address}
+                    onChange={(e) =>
+                      setCustomer({ ...customer, address: e.target.value })
+                    }
+                  />
+                </Stack>
+
+                {propertySize && totalPrice > 0 && (
                 <>
                   <Box p={4} bg="gray.100" borderRadius="md">
-                    <Text fontWeight="bold">
-                      Total: £{totalPrice}
-                    </Text>
+                  <Text>Service: {selectedService}</Text>
+                  <Text>Property: {propertySize}</Text>
+
+                  {addons.map((addonLabel) => {
+                    const addon = DOMESTIC_ADDONS.find(a => a.label === addonLabel);
+
+                    return (
+                      <Text key={addonLabel}>
+                        {addonLabel} — £{addon?.price}
+                      </Text>
+                    );
+                  })}
+
+                  <Text fontWeight="bold">
+                    Total: £{totalPrice}
+                  </Text>
                   </Box>
 
                   {!clientSecret && (
                     <Button
-                      colorScheme="teal"
-                      onClick={createPaymentIntent}
-                    >
-                      Continue to Payment
-                    </Button>
+                    colorScheme="teal"
+                    onClick={createPaymentIntent}
+                    isLoading={loadingIntent}
+                    isDisabled={
+                      !basePrice ||
+                      !propertySize ||
+                      !customer.name ||
+                      !customer.email ||
+                      !customer.phone ||
+                      !customer.address
+                    }
+                  >
+                    Continue to Payment
+                  </Button>
                   )}
                 </>
               )}

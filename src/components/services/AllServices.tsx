@@ -149,6 +149,14 @@ export const AllServices = () => {
   const [serviceType, setServiceType] = useState<"Residential" | "Commercial" | "">("");
   const [selectedService, setSelectedService] = useState("");
   const [serviceTypeLocked, setServiceTypeLocked] = useState(false);
+  const [propertySize, setPropertySize] = useState("");
+  const [loadingIntent, setLoadingIntent] = useState(false);
+  const [customer, setCustomer] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
 
   // const cardBg = useColorModeValue(
   //   "rgba(255,255,255,0.7)",
@@ -167,16 +175,40 @@ export const AllServices = () => {
   }, 0);
 
   const startPayment = async () => {
-    const res = await fetch("/api/create-payment-intent", {
-      method: "POST",
-      body: JSON.stringify({
-        amount: totalPrice,
-      }),
-    });
+    try {
+      setLoadingIntent(true);
   
-    const data = await res.json();
+      const res = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customer,
+          service: selectedService,
+          propertySize,
+          addons,
+        })
+      });
   
-    setClientSecret(data.clientSecret);
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Payment initialization failed");
+      }
+      
+      const data = await res.json();
+      setClientSecret(data.clientSecret);
+  
+      if (!data.clientSecret) {
+        throw new Error("Payment initialization failed");
+      }
+  
+      setClientSecret(data.clientSecret);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingIntent(false);
+    }
   };
 
   const openBooking = (
@@ -195,6 +227,16 @@ export const AllServices = () => {
     setServiceTypeLocked(false);
     setBasePrice(null);
     setAddons([]);
+    setClientSecret("");
+    setPropertySize(""); 
+  
+    setCustomer({
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+    });
+  
     onClose();
   };
 
@@ -255,6 +297,7 @@ export const AllServices = () => {
                           (p) => p.label === e.target.value
                         );
                         setBasePrice(selected?.price || 0);
+                        setPropertySize(e.target.value);
                       }}
                     >
                       {DOMESTIC_BASE_PRICES.map((p) => (
@@ -271,31 +314,79 @@ export const AllServices = () => {
                       Extra Services
                     </Text>
 
-                    <CheckboxGroup>
+                    <CheckboxGroup
+                      value={addons}
+                      onChange={(val) => setAddons(val as string[])}
+                    >
                       <Stack spacing={2}>
                         {DOMESTIC_ADDONS.map((a) => (
-                          <Checkbox
-                            key={a.label}
-                            isChecked={addons.includes(a.label)}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setAddons([...addons, a.label]);
-                              } else {
-                                setAddons(addons.filter((x) => x !== a.label));
-                              }
-                            }}
-                          >
-                            {a.label} — £{a.price}
-                          </Checkbox>
+                          <Checkbox key={a.label} value={a.label}>
+                          {a.label} — £{a.price}
+                        </Checkbox>
                         ))}
                       </Stack>
                     </CheckboxGroup>
                   </Box>
 
+                  <Box>
+                    <Text fontWeight="600" mb={2}>Your Details</Text>
+
+                    <Stack spacing={3}>
+                      <Input
+                        placeholder="Full Name"
+                        value={customer.name}
+                        onChange={(e) =>
+                          setCustomer({ ...customer, name: e.target.value })
+                        }
+                      />
+
+                      <Input
+                        placeholder="Email"
+                        value={customer.email}
+                        onChange={(e) =>
+                          setCustomer({ ...customer, email: e.target.value })
+                        }
+                      />
+
+                      <Input
+                        placeholder="Phone Number"
+                        value={customer.phone}
+                        onChange={(e) =>
+                          setCustomer({ ...customer, phone: e.target.value })
+                        }
+                      />
+
+                      <Input
+                        placeholder="Service Address"
+                        value={customer.address}
+                        onChange={(e) =>
+                          setCustomer({ ...customer, address: e.target.value })
+                        }
+                      />
+                    </Stack>
+                  </Box>
+
                   {/* Price Summary */}
                   <Box p={4} borderRadius="lg" bg="gray.50">
-                    <Text fontWeight="700">Total Price</Text>
-                    <Heading size="lg">£{totalPrice}</Heading>
+                    <Stack spacing={2}>
+                      <Text fontWeight="600">Service</Text>
+                      <Text>{selectedService}</Text>
+
+                      <Text fontWeight="600">Property</Text>
+                      <Text>{propertySize}</Text>
+
+                      {addons.length > 0 && (
+                        <>
+                          <Text fontWeight="600">Add-ons</Text>
+                          <Text>{addons.join(", ")}</Text>
+                        </>
+                      )}
+
+                      <Divider />
+
+                      <Text fontWeight="700">Total Price</Text>
+                      <Heading size="lg">£{totalPrice}</Heading>
+                    </Stack>
                   </Box>
 
                   {/* Stripe Checkout */}
@@ -310,7 +401,15 @@ export const AllServices = () => {
                       bgGradient={`linear(to-r, ${BRAND}, #009ed6)`}
                       color="white"
                       onClick={startPayment}
-                      isDisabled={!basePrice}
+                      isLoading={loadingIntent}
+                      isDisabled={
+                        totalPrice <= 0 ||
+                        !propertySize ||
+                        !customer.name ||
+                        !customer.email ||
+                        !customer.phone ||
+                        !customer.address
+                      }
                     >
                       Pay £{totalPrice}
                     </Button>

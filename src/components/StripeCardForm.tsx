@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   CardElement,
@@ -21,7 +20,6 @@ import {
 export default function StripeCardForm({ clientSecret }: any) {
   const stripe = useStripe();
   const elements = useElements();
-
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -33,6 +31,11 @@ export default function StripeCardForm({ clientSecret }: any) {
     setErrorMsg(null);
 
     const card = elements.getElement(CardElement);
+    if (!card) {
+      setErrorMsg("Card information is missing.");
+      setLoading(false);
+      return;
+    }
 
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       clientSecret,
@@ -52,6 +55,9 @@ export default function StripeCardForm({ clientSecret }: any) {
 
     if (paymentIntent?.status === "succeeded") {
       setSuccess(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     }
   };
 
@@ -116,7 +122,7 @@ export default function StripeCardForm({ clientSecret }: any) {
               size="lg"
               colorScheme="teal"
               onClick={handleSubmit}
-              isDisabled={!stripe}
+              isDisabled={!stripe || loading || success}
               w="full"
             >
               {loading ? <Spinner size="sm" /> : "Pay Securely"}
