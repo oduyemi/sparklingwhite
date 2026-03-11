@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { ClientSideLayout } from "@/components/ClientsideLayout";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sparklingwhitelimited.co.uk"),
   title: "Professional Cleaning Services UK | Sparkling White Limited",
   description:
     "Sparkling White Limited provides professional domestic and commercial cleaning services across the UK. Deep cleaning, end-of-tenancy cleaning, carpet cleaning, and office cleaning available 24/7.",
@@ -18,8 +19,11 @@ export const metadata: Metadata = {
     "commercial cleaning UK",
     "end of tenancy cleaning UK",
     "deep cleaning UK",
-    "carpet cleaning UK",
+    "carpet cleaning UK"
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Professional Cleaning Services UK | Sparkling White Limited",
     description:
@@ -39,6 +43,30 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
+        <Script
+          id="schema-cleaning-service"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CleaningService",
+              name: "Sparkling White Limited",
+              url: "https://sparklingwhitelimited.co.uk",
+              "areaServed": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              },
+              serviceType: [
+                "Domestic Cleaning",
+                "Commercial Cleaning",
+                "End of Tenancy Cleaning",
+                "Deep Cleaning",
+                "Carpet Cleaning"
+              ]
+            })
+          }}
+        />
         <ChakraProvider>
           <Box minH="100vh" display="flex" flexDirection="column" m={0} p={0}>
             <ClientSideLayout>{children}</ClientSideLayout>
