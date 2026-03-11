@@ -24,9 +24,9 @@ export default function Home() {
       <div>
         <FAQ />
       </div>
-      <div>
+      {/* <div>
         <PricingTable />
-      </div>
+      </div> */}
       <div>
         <CTA />
       </div>
