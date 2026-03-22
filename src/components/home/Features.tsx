@@ -5,6 +5,7 @@ import { Box, Heading, Text, Button, VStack, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import "animate.css";
+import { Link } from "../../../node_modules/@chakra-ui/next-js/dist/types/link";
 
 const features = [
   {
@@ -47,18 +48,20 @@ export const WhyUs: React.FC = () => {
               <Text fontSize="md" color="gray.700" mb={5}>
                 We combine industry expertise with modern equipment and eco-conscious practices to give you an exceptional cleaning experience. Our services are customized to your environment and expectations.
               </Text>
-              <Button
-                color="white"
-                bg="#00B4F2"
-                _hover={{ bg: "#00539C" }}
-                textTransform="uppercase"
-                px={8}
-                py={6}
-                fontSize="sm"
-                borderRadius="md"
-              >
-                Learn More
-              </Button>
+              <Link href="/why-us">
+                <Button
+                  color="white"
+                  bg="#00B4F2"
+                  _hover={{ bg: "#00539C" }}
+                  textTransform="uppercase"
+                  px={8}
+                  py={6}
+                  fontSize="sm"
+                  borderRadius="md"
+                >
+                  Learn More
+                </Button>
+              </Link>
             </Box>
           </motion.div>
 

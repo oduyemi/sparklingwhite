@@ -9,7 +9,7 @@ import { ClientSideLayout } from "@/components/ClientsideLayout";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sparklingwhitelimited.co.uk"),
-  title: "Professional Cleaning Services UK | Sparkling White Limited",
+  title: "Sparkling White Limited | Professional Cleaning Services Derby UK| ",
   description:
     "Sparkling White Limited provides professional domestic and commercial cleaning services across the UK. Deep cleaning, end-of-tenancy cleaning, carpet cleaning, and office cleaning available 24/7.",
   keywords: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Professional Cleaning Services UK | Sparkling White Limited",
+    title: "Sparkling White Limited | Professional Cleaning Services Derby UK",
     description:
       "Trusted domestic and commercial cleaning company serving customers across the United Kingdom.",
     url: "https://sparklingwhitelimited.co.uk",

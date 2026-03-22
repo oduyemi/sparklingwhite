@@ -34,7 +34,7 @@ export const Why: React.FC = () => {
   return (
     <Box bg={bg} py={{ base: 10, md: 16 }} px={{ base: 4, md: 12 }}>
       <VStack spacing={6} mb={10}>
-        <Heading fontSize="3xl" textAlign="center">Why Hire Sparkling White?</Heading>
+        <Heading fontSize="3xl" textAlign="center">Why Hire Sparkling White Cleaners?</Heading>
         <Text fontSize="md" maxW="3xl" textAlign="center">
           We go above and beyond to deliver premium cleaning services tailored to meet your needs. Here&apos;s why hundreds of UK households and businesses trust us.
         </Text>

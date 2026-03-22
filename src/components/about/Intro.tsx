@@ -122,7 +122,7 @@ export const AboutIntro: React.FC = () => {
                 {/* CTA */}
                 <Button
                   as="a"
-                  href="#"
+                  href="/services"
                   bg="#00b4f2"
                   color="white"
                   size="lg"
@@ -139,7 +139,7 @@ export const AboutIntro: React.FC = () => {
                   }}
                   transition="all 0.3s ease-in-out"
                 >
-                  Learn More
+                  Explore Services
                 </Button>
               </VStack>
             </MotionBox>
