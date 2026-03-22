@@ -5,7 +5,7 @@ import { Box, Heading, Text, Button, VStack, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import "animate.css";
-import { Link } from "next/link";
+import Link from "next/link";
 
 const features = [
   {
